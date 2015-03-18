@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".BookListActivity"
+        android:background="#90caf9">
+
+
+        <TextView
+            android:id="@+id/main_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:freezesText="true"
+            android:text="@string/textview"/>
+        <!-- This nested layout contains views of its own -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Set OnClickListener to trigger results when pressed -->
+            <!-- Shows an image from your drawable resources -->
+            <!-- Closing tag for the horizontal nested layout -->
+
+        </LinearLayout>
+        <!-- Displays keyboard when touched -->
+        <!-- List whose dataset is defined in code with an adapter -->
+
+
+        <ListView
+
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            android:padding="15dp"
+            android:background="@drawable/lense"
+            android:src="@drawable/img_books_loading"
+            android:id="@+id/Books"
+            android:layout_width="match_parent"
+            android:divider="#90caf9"
+            android:dividerHeight="2dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_height="0dp"
+            android:layout_weight="0.50"
+            android:freezesText="true"
+            android:layout_marginTop="40dp"
+            android:text="Medium Text"
+            android:clickable="false"
+            android:listSelector="#bbdefb"
+            android:touchscreenBlocksFocus="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

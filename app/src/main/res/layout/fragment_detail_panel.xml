@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+    <ImageView
+        android:id="@+id/BookCover"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:maxHeight="160dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/img_books_loading" />
+
+
+    <TextView
+        android:id="@+id/Title"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/BookCover"
+        android:text="Book Title"
+        android:paddingRight="10dp"
+        android:visibility="visible"
+        android:textAlignment="gravity" />
+
+    <TextView
+        android:id="@+id/Author"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_alignLeft="@+id/Title"
+        android:layout_below="@+id/Title"
+        android:text="Author: Unavailable"
+        android:layout_marginTop="5dp" />
+
+
+    <TextView
+        android:id="@+id/Publisher"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Author"
+        android:layout_below="@+id/Author"
+        android:layout_marginTop="5dp"
+        android:text="Publisher: Unavailable"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/PageCount"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Publisher"
+        android:layout_below="@+id/Publisher"
+        android:layout_marginTop="5dp"
+        android:text="Pages: Unavailable"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/TextHolder"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/PageCount"
+        android:layout_below="@+id/PageCount"
+        android:text="Date Published"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/PublishedDate"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextHolder"
+        android:layout_below="@+id/TextHolder"
+        android:text="Unavailable"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/BookCover"
+        android:layout_margin="10dp" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/BookCover"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Description"
+                android:layout_alignRight="@+id/PublishedDate"
+                android:layout_below="@+id/PublishedDate" >
+            </TextView>
+
+           <TextView
+            android:id="@+id/FirstSentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unavailable" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>
