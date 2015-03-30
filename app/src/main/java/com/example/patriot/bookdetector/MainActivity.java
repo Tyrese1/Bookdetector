@@ -25,26 +25,45 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements MainPanelFragment.Callbacks{
     public static final String BOOK_DETAIL_KEY = "book";
     private ListView Books;
     private BookAdapter mbookAdapter;
     private BookClient client;
     ProgressDialog mDialog;
     private ProgressBar progress;
+    private boolean mTwoPane;
+
+    private MainPanelFragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Books = (ListView) findViewById(R.id.Books);
-        ArrayList<Book> aBooks = new ArrayList<Book>();
+        mainFragment =  ((MainPanelFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list));
+        if (findViewById(R.id.item_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-large and
+            // res/values-sw600dp). If this view is present, then the
+            // activity should be in two-pane mode.
+            mTwoPane = true;
+
+            // In two-pane mode, list items should be given the
+            // 'activated' state when touched.
+            ((MainPanelFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.item_list))
+                    .setActivateOnItemClick(true);
+        }
+
+        //Books = (ListView) findViewById(R.id.lis);
+        //ArrayList<Book> aBooks = new ArrayList<Book>();
         // initialize the adapter
-        mbookAdapter = new BookAdapter(this, aBooks);
+        // mbookAdapter = new BookAdapter(this, aBooks);
         // attach the adapter to the ListView
-        Books.setAdapter(mbookAdapter);
-        progress = (ProgressBar) findViewById(R.id.progress);
-        setupBookSelectedListener();
+        // Books.setAdapter(mbookAdapter);
+        // progress = (ProgressBar) findViewById(R.id.progress);
+        // setupBookSelectedListener();
     }
 
     public void setupBookSelectedListener() {
@@ -105,8 +124,6 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -121,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Fetch the data remotely
-                fetchBooks(query);
+                mainFragment.fetchBooks(query);
                 // Reset SearchView
                 searchView.clearFocus();
                 searchView.setQuery("", false);
@@ -153,5 +170,24 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Book book) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            DetailPanelFragment fragment = DetailPanelFragment.newInstance(book);;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+
+        } else {
+            // Launch the detail view passing book as an extra
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra(BOOK_DETAIL_KEY, book);
+            startActivity(intent);
+        }
     }
 }

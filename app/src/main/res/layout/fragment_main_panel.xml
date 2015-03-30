@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-
-
-
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="match_parent"
@@ -50,15 +46,13 @@
 
 
         <ListView
-
-
+            android:id="@android:id/list"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="15dp"
             android:padding="15dp"
             android:background="@drawable/lense"
             android:src="@drawable/img_books_loading"
-            android:id="@+id/Books"
             android:layout_width="match_parent"
             android:divider="#90caf9"
             android:dividerHeight="2dp"

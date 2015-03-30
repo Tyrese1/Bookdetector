@@ -42,6 +42,8 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.fragment_detail_panel);
         // Fetch views
 
+
+
         BookCover = (ImageView) findViewById(R.id.BookCover);
         Title = (TextView) findViewById(R.id.Title);
         Author = (TextView) findViewById(R.id.Author);

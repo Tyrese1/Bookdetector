@@ -7,10 +7,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class DetailPanelFragment extends ActionBarActivity {
+public class DetailPanelFragment extends Fragment {
     private ImageView BookCover;
     private TextView Title;
     private TextView Author;
@@ -34,32 +35,33 @@ public class DetailPanelFragment extends ActionBarActivity {
     private TextView PageCount;
     private TextView FirstSentence;
     private BookClient client;
+    private Book book;
 
+
+    public static final DetailPanelFragment newInstance(Book book) {
+        DetailPanelFragment fragment = new DetailPanelFragment();
+        fragment.book = book;
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_detail_panel);
-        // Fetch views
-
-        BookCover = (ImageView) findViewById(R.id.BookCover);
-        Title = (TextView) findViewById(R.id.Title);
-        Author = (TextView) findViewById(R.id.Author);
-        Publisher = (TextView) findViewById(R.id.Publisher);
-        PageCount = (TextView) findViewById(R.id.PageCount);
-        FirstSentence = (TextView) findViewById(R.id.PublishedDate);
-
-        // Use the book to populate the data into our views
-        Book book = (Book) getIntent().getSerializableExtra(MainActivity.BOOK_DETAIL_KEY);
-        loadBook(book);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_detail_panel, container, false);
+        BookCover = (ImageView) rootView.findViewById(R.id.BookCover);
+        Title = (TextView)  rootView.findViewById(R.id.Title);
+        Author = (TextView)  rootView.findViewById(R.id.Author);
+        Publisher = (TextView)  rootView.findViewById(R.id.Publisher);
+        PageCount = (TextView)  rootView.findViewById(R.id.PageCount);
+        FirstSentence = (TextView)  rootView.findViewById(R.id.PublishedDate);
+        if(book != null)
+            loadBook(book);
+        return rootView;
     }
 
     // Populate data for the book
     private void loadBook(Book book) {
-        //change activity title
-        this.setTitle(book.getTitle());
-        // Populate data
-        Picasso.with(this).load(Uri.parse(book.getLargeCoverUrl())).placeholder(R.drawable.img_books_loading).error(R.drawable.ic_nocover).into(BookCover);
+        Picasso.with(getActivity()).load(Uri.parse(book.getLargeCoverUrl())).placeholder(R.drawable.img_books_loading).error(R.drawable.ic_nocover).into(BookCover);
         Title.setText(book.getTitle());
         Author.setText(book.getAuthor());
         FirstSentence.setText(book.getPublished_date());
@@ -97,33 +99,9 @@ public class DetailPanelFragment extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_book_detail, menu);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_logo);
-// this adds items to the action bar if it is present.
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_share) {
-            setShareIntent();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void setShareIntent() {
-        ImageView ivImage = (ImageView) findViewById(R.id.BookCover);
-        final TextView tvTitle = (TextView)findViewById(R.id.Title);
+        ImageView ivImage = (ImageView) getActivity().findViewById(R.id.BookCover);
+        final TextView tvTitle = (TextView)getActivity().findViewById(R.id.Title);
         // Get access to the URI for the bitmap
         Uri bmpUri = getLocalBitmapUri(ivImage);
         // Construct a ShareIntent with link to image
